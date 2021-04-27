@@ -35,52 +35,11 @@ class FunctionsService
         $this->sessionInterface->set('name', $name);
     }
 
-    public function matchListConstructor($ApiDataJSON) {
-
-        // sans le true, on se retrouve avec des objets de class stdClass
-        $json = json_decode($ApiDataJSON, true);
-        $matchList = $json['data'];
-
-        $returnArray = array();
-        foreach ($matchList as $match){
-            $teams = $match["teams"];
-            $homeTeam = $match["home_team"];
-
-            // Création d'un id en concaténant nom de l'équipe qui reçoit avec timestamp du match
-            // Seul cas où l'id perdra son unicité : changement de date du match (reporté ? annulé ?)
-            $timestampId = strval($match["commence_time"]);
-            $id = self::slugify($homeTeam.$timestampId);
-
-            $keyToDelete = array_search($homeTeam, $teams);
-            $keyToKeep = ($keyToDelete == 0) ? 1 : 0;
-            $awayTeam = $teams[$keyToKeep];
-            $date = date('Y-m-d H:i', $match["commence_time"]);
-            $odds = $match["sites"][0]["odds"]["h2h"];
-            $homeOdd = number_format($odds[0], 2, '.', '');
-            $drawOdd = number_format($odds[1], 2, '.', '');
-            $awayOdd = number_format($odds[2], 2, '.', '');
-            $myMatch = array(
-                "id" => $id,
-                "league" => $match["sport_nice"],
-                "homeTeam" => $homeTeam,
-                "awayTeam" => $awayTeam,
-                "date" => $date,
-                "homeOdd" => $homeOdd,
-                "drawOdd" => $drawOdd,
-                "awayOdd" => $awayOdd
-            );
-            array_push($returnArray, $myMatch);
-        }
-        return $returnArray;
-    }
-
     public function verifyBet($betsArray){
 
         $json = file_get_contents("../API/APIDataConverted.json");
 
         $newJson = json_decode($json, true);//newJson type = array
-
-
 
         //[{"match":"OL-OM","choice":"home","odd":"2.3"},{"match":"PSG-MU","choice":"home","odd":"1.9"}]
 
