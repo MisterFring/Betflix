@@ -16,6 +16,10 @@ class DatabaseService
      */
     private $entityManager;
 
+    /**
+     * DatabaseService constructor.
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -80,7 +84,7 @@ class DatabaseService
          * @var Bet $bet
          */
 
-        $betsToRandom = array();
+        $betsToCheck = array();
         $dateNow = new \DateTime();
 
         // pas réussi à trouver comment utiliser un where pour directement conditionner
@@ -90,50 +94,40 @@ class DatabaseService
         foreach ($bets as $bet){
             $diff = $dateNow->getTimestamp() - $bet->getBetDateEnd()->getTimestamp();
             if ($diff > 0 && $bet->getWin() === 'in progress') {
-                array_push($betsToRandom, $bet);
+                array_push($betsToCheck, $bet);
             }
         }
-// sans le true, on se retrouve avec des objets de class stdClass
-        //$json = json_decode($ApiDataJSON, true);
-        //$this->getResultFromMatchId(157508);
-        $data = json_decode(file_get_contents("/Users/Pierredck/Documents/Coding Factory/Betflix/API/test.json"), true);
-        $score = $data['api']['fixtures'][0]['score']['fulltime'];
 
-        $out = [];
-        preg_match_all('/\d+/', $score, $out, PREG_PATTERN_ORDER);
-        $goalNumberHome = $out[0][0];
-        $goalNumberAway = $out[0][1];
-        $diff = $goalNumberHome - $goalNumberAway;
-        if ($diff == 0){
-            $matchResult = 'N';
-        }
-        else{
-            if ($diff > 0){
-                $matchResult = '1';
-            } else {
-                $matchResult = '2';
+        $isBetWin = false;
+        foreach ($betsToCheck as $bet){
+
+            $matchesFrom1Bet = json_decode(json_encode($bet->getData()), True);
+            //var_dump($matchesFrom1Bet);
+            foreach ($matchesFrom1Bet as $match){
+                //var_dump($match["idApi"]);
+                $matchResult = 'away';//$this->getResultFromMatchId($match["idApi"]);
+                if ($match['choice'] == $matchResult){
+                    $isBetWin = true;
+                }
+                else {
+                    $isBetWin = false;
+                    break;
+                }
             }
-        }
-        print $matchResult;
-        foreach ($betsToRandom as $bet){
-            //print_r($bet->getData());
-            //faire avec id en dur
-
-
-            /* $rand = rand(0,1);
-            $bool = ($rand === 0) ? 'win' : 'loss';
-
-            // Add the gain if bet wins
-            if ($bool === 'win'){
+            if ($isBetWin) {
                 $user = $bet->getUser();
-                $gain = $bet->getOddsTotal() * $bet->getBetAmount();
+                $gain = round(($bet->getOddsTotal() * $bet->getBetAmount()), 2);
                 /**
                  * @var User $user
-
+                 */
                 $user->setCredits(($user->getCredits()) + $gain);
+                $bet->setWin('win');
+                $this->entityManager->persist($user);
+            } else {
+                $bet->setWin('loss');
             }
-
-            $bet->setWin($bool);*/
+            $this->entityManager->persist($bet);
+            $this->entityManager->flush();
         }
 
 
@@ -181,10 +175,28 @@ class DatabaseService
         if ($err) {
             echo "cURL Error #:" . $err;
         } else {
-            echo $response;
+            //echo $response;
         }
 
-        file_put_contents('/Users/Pierredck/Documents/Coding Factory/Betflix/API/test.json', $response);
+        $data = json_decode($response,true);
+        $score = $data["api"]["fixtures"][0]["score"]["fulltime"];
+
+        $out = [];
+        preg_match_all('/\d+/', $score, $out, PREG_PATTERN_ORDER);
+        $goalNumberHome = $out[0][0];
+        $goalNumberAway = $out[0][1];
+        $diff = $goalNumberHome - $goalNumberAway;
+        if ($diff == 0){
+            $matchResult = 'draw';
+        }
+        else{
+            if ($diff > 0){
+                $matchResult = 'home';
+            } else {
+                $matchResult = 'away';
+            }
+        }
+        return $matchResult;
     }
 
 }

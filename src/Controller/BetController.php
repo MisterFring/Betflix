@@ -103,14 +103,10 @@ class BetController extends AbstractController
             "credits" => $user->getCredits()
         );
 
-        $userBets = $user->getBet();
-
+        // We reverse the table to have the decreasing dates
+        $userBets = array_reverse($user->getBet());
         $arrayResult = array();
-        /*
-         *
-         * Il faudrait trier les bets par date plus récente vers plus vieille
-         *
-        */
+
         /**
          * @var Bet $bet
          */
@@ -128,6 +124,7 @@ class BetController extends AbstractController
                 default :
                     'error';
             }
+
             $arrayTampo = array(
                 "oddsTotal" => round($bet->getOddsTotal(), 2),
                 "betAmount" => round($bet->getBetAmount(), 2),
@@ -151,12 +148,6 @@ class BetController extends AbstractController
      * @return Response
      */
     public function checkBet(Request $request){
-
-        /* ----------- to put in CRON ------------- */
-
-        //$test = $this->dbService->setRandomResults();
-
-        /*------------------------------------------*/
 
         $userId = $this->sessionInterface->get('user_id');
         // We check if the user is logged in, if not, he cannot bet.

@@ -106,7 +106,7 @@ class DefaultController extends AbstractController
         //$json = file_get_contents("../API/APIData.json");
 
         $matchList = json_decode(file_get_contents("../API/APIDataConverted.json"), true);
-            //$this->functionsService->matchListConstructor($json);
+        //$this->functionsService->matchListConstructor($json);
         //file_put_contents('../API/APIDataConverted.json', json_encode($matchList));
 
         //$matchList = $this->functionsService->matchListConstructor($json);
@@ -122,14 +122,6 @@ class DefaultController extends AbstractController
                 "credits" => $user->getCredits()
             );
         }
-
-        /*$bet = array(
-            "oddsTotal" => $bet->getOddsTotal(),
-            "betAmount" => $bet->getBetAmount(),
-            "betDate" => $bet->getBetDate()->format('Y-m-d H:i:s'),
-            "details" => $bet->getData()
-        );*/
-        //print_r($matchList);
 
         $display = $this->twig->render('/base.html.twig', [
             'connected' => $user,
@@ -154,7 +146,7 @@ class DefaultController extends AbstractController
 
         // This argument gives the current date and is used in the twig,
         // so that the user cannot enter a birth date higher than now.
-        $aa = date_format($date, 'Y-m-d');
+        $maxBirthDate = date_format($date, 'Y-m-d');
 
         $checkPwd = $this->checkUser->check_password($request->get("password"));
         $checkConfPwd = $this->checkUser->checkCorrespondanceBetween2Passwords(
@@ -166,7 +158,7 @@ class DefaultController extends AbstractController
             $display = $this->twig->render('/Home/login.html.twig', [
                 'error' => $checkPwd,
                 'signIn' => true,
-                'dateNow' => $aa
+                'dateNow' => $maxBirthDate
             ]);
             return new Response($display);
         }
@@ -174,7 +166,7 @@ class DefaultController extends AbstractController
             $display = $this->twig->render('/Home/login.html.twig', [
                 'error' => 'Your confirm password is different',
                 'signIn' => true,
-                'dateNow' => $aa
+                'dateNow' => $maxBirthDate
             ]);
             return new Response($display);
         }
@@ -204,7 +196,7 @@ class DefaultController extends AbstractController
             $display = $this->twig->render('/Home/login.html.twig', [
                 'error' => 'You must be of legal age to enjoy BETFLIX',
                 'signIn' => true,
-                'dateNow' => $aa
+                'dateNow' => $maxBirthDate
             ]);
         }
         else {
@@ -222,14 +214,14 @@ class DefaultController extends AbstractController
                     $display = $this->twig->render('/Home/login.html.twig', [
                         'error' => 'A user with this pseudo ('.$request->get("username").') already exists',
                         'signIn' => true,
-                        'dateNow' => $aa
+                        'dateNow' => $maxBirthDate
                     ]);
                 }
                 if (!empty($mailExists)){
                     $display = $this->twig->render('/Home/login.html.twig', [
                         'error' => 'A user with this email ('.$request->get("email").') already exists',
                         'signIn' => true,
-                        'dateNow' => $aa
+                        'dateNow' => $maxBirthDate
                     ]);
                 }
             }
@@ -315,32 +307,5 @@ class DefaultController extends AbstractController
         $this->sessionInterface->clear();
         return $this->redirectToRoute('/');
     }
-
-/*    /**
-     * @param Request $request
-     * @return Response
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     * * @Route ("/home", name="home")
-
-    public function register(Request $request){
-        $user = new User('aa','aa', 'aa');
-
-        $form = $this->createForm(registerForm::class, $user);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($user);
-            $this->entityManager->flush();
-        }
-
-        $display = $this->twig->render('/base.html.twig', [
-            'formUser' => $form->createView()
-        ]);
-        return new Response($display);
-    }
-*/
 
 }
