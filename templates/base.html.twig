@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>BETFLIX</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="shortcut icon" type="image/png" href="/img/money.png"/>
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+	<style>
+		.button1 {
+			font-size: 20px;
+			padding: 2%;
+			background-color: #4CAF50;
+			border: none;
+			color: white;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			width: 20%;
+			border-radius: 12px;
+		}
+		.scroller {
+			height: 80%;
+			overflow-y: scroll;
+			scrollbar-color: rebeccapurple green;
+			scrollbar-width: thin;
+		}
+		.scroller * {
+			overflow-anchor: none;
+		}
+	</style>
+</head>
+
+<body>
+
+<!-- Navigation bar-->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top" style="position: fixed; z-index: 10; width: 100%">
+		{% if connected is defined and connected is not null %}
+			<a class="navbar-brand" href="/">
+				{{ connected.pseudo }} - <span id="credits">{{ connected.credits }}</span> €
+			</a>
+		{% else %}
+			<a class="navbar-brand" href="/">
+				BETFLIX
+			</a>
+		{% endif %}
+
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarResponsive">
+			<ul class="navbar-nav ml-auto">
+				{% if connected is defined and connected is not null %}
+					<li class="nav-item">
+						<a class="nav-link" href="/myBets">My Bets
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/logOut">Log Out
+						</a>
+					</li>
+				{% else %}
+					<li class="nav-item">
+						<a class="nav-link" href="/signInPage">Sign in
+							<span class="sr-only">(current)</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/logInPage">Log in</a>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+	</nav>
+
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12 text-center">
+			<h1 class="mt-5">
+				<h1 style="color: lightslategrey; margin-top: 7%">Ligue 1</h1>
+			</h1>
+		</div>
+	</div>
+</div>
+
+{% block myBets %}{% endblock %}
+{% block login %}{% endblock %}
+
+{% block register %}{% endblock %}
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
+
+<div class="container" style="display: flex; flex-wrap: nowrap; justify-content: space-between;">
+		<div style="width: auto;  flex-grow: 2">
+			<div id="betList" class="row p-4 p-md-3 justify-content-around">
+
+				{% if matchList is defined %}
+					{% for match in matchList %}
+
+						<div class="card text-center" style="width: 20rem; margin-bottom: 20px;">
+							<div class="card-body">
+								<h5 class="card-title">{{ match.homeTeam }}</h5>
+								<h5 class="card-title">{{ match.awayTeam }}</h5>
+								<p class="card-text">{{ match.date }}</p>
+								<div class="row d-flex justify-content-around">
+									<button @click="betClicked(
+								'{{ match.id }}',
+								'{{ match.homeTeam }}',
+								'{{ match.awayTeam }}',
+								'{{ match.date }}',
+								'{{ match.leagueName }}',
+								'{{ match.homeOdd }}',
+								'home'
+								)" class="button1">
+										{{ match.homeOdd }}
+									</button>
+									<button @click="betClicked(
+								'{{ match.id }}',
+								'{{ match.homeTeam }}',
+								'{{ match.awayTeam }}',
+								'{{ match.date }}',
+								'{{ match.leagueName }}',
+								'{{ match.homeOdd }}',
+								'draw'
+								)" class="button1">{{ match.drawOdd }}</button>
+									<button @click="betClicked(
+								'{{ match.id }}',
+								'{{ match.homeTeam }}',
+								'{{ match.awayTeam }}',
+								'{{ match.date }}',
+								'{{ match.leagueName }}',
+								'{{ match.awayOdd }}',
+								'away'
+								)" class="button1">{{ match.awayOdd }}</button>
+								</div>
+							</div>
+						</div>
+
+					{% endfor %}
+				{% endif %}
+			</div>
+		</div>
+
+		<div id="cart" class="scroller" style="flex-grow: 1; width: 70%">
+
+			<div v-if="response.length > 0">
+				<p :style="[error ? { 'color' : 'red' } : {'color' : 'green'}]" style="text-align: center">
+					${response}
+				</p>
+				<p v-if="response === 'You have to be connected to bet !'" style="text-align: center">
+					<a href="/logInPage"><button class="button1">Log In</button></a>
+				</p>
+			</div>
+			<div v-if="list.length > 0">
+				<div class="card-header">Bets (combined betting)</div>
+
+				<div v-for="(choice, index) in list" :key="index" class="card-body">
+					<div class="card">
+						<h5 class="card-title">${ choice.homeTeam } - ${ choice.awayTeam }</h5>
+						<p class="card-text">
+							${ choice.date } -
+							${ choice.league }
+							<br />
+							${ choice.choice } -
+							${ choice.odd }
+						</p>
+						<div class="text-right">
+							<button class="btn btn-danger" @click="deleteChoice(choice)">Delete</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="card text-white bg-success text-center p-3 p-md-3" style="width: 50%; margin: auto; overflow-anchor: auto;">
+					<h5 class="card-title font-italic">Total Odd : ${getTotalOdd}</h5>
+					<input class="form-control" style="text-align: right; width: 50%; margin: auto" type="number" step="0.10" min="0.01" v-model.number="amount" required>
+					<p class="font-italic">Potential gain : ${getPotentialGain}</p>
+					<button class="btn btn-warning" @click="betConfirmed()" type="submit" id="slowToTop">Confirm</button>
+				</div>
+			</div>
+		</div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script src="/scripts/script.js"></script>
+
+{% block scripts_after %}{% endblock %}
+</body>
+
+
+</html>

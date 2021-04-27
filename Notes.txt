@@ -1,0 +1,4 @@
+Notes pour le projet :
+
+- voir avec Axel pour export des scores de joueurs
+- Trouver un système de roulette à freebets lorsqu'on est à sec

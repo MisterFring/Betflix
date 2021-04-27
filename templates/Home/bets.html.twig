@@ -1,0 +1,49 @@
+{% extends "/base.html.twig" %}
+
+{% block myBets %}
+
+	<div class="container">
+		<table class="table table-bordered">
+			<thead class="thead-dark">
+				<tr>
+					<th>Odd</th>
+                    <th style="text-align: right">Date</th>
+					<th style="text-align: right">Potential Gain</th>
+					<th style="text-align: right">Bet Details</th>
+				</tr>
+			</thead>
+			{% for bet in bets %}
+				<tr style="background-color: {{ bet.color }}">
+					<td>
+                    <span class="font-italic">Odd : </span>
+                    <span class="font-weight-bold">{{ bet.oddsTotal }}</span>
+				    /
+                    <span class="font-italic">Amount : </span>
+                    <span class="font-weight-bold">{{ bet.betAmount }}</span>
+					</td>
+                    <td style="text-align: right">
+                        {{ bet.betDate }}
+                    </td>
+					<td style="text-align: right">
+						{{ (bet.betAmount *  bet.oddsTotal)|round(2) }}€
+					</td>
+					<td align="right" style="background-color: white">
+						<div class="btn-group">
+							<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Details
+							</button>
+							<div class="dropdown-menu">
+								{% for item in bet.details %}
+									<a class="dropdown-item" href="#">{{ item.match }}
+										-
+										{{ item.odd }}</a>
+								{% endfor %}
+							</div>
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+
+{% endblock %}
