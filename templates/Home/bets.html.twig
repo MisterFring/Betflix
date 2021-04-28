@@ -1,9 +1,7 @@
 {% extends "/base.html.twig" %}
 
 {% block myBets %}
-
-	<div class="container">
-		<table class="table table-bordered">
+		<table class="table table-bordered" style="width: 70%" align="center">
 			<thead class="thead-dark">
 				<tr>
 					<th>Odd</th>
@@ -28,8 +26,8 @@
 						{{ (bet.betAmount *  bet.oddsTotal)|round(2) }}€
 					</td>
 					<td align="right" style="background-color: white">
-						<div class="btn-group">
-							<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<div class="btn-group dropleft">
+							<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Details
 							</button>
 							<div class="dropdown-menu">

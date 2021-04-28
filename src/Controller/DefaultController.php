@@ -103,11 +103,6 @@ class DefaultController extends AbstractController
      */
     public function index(){
 
-        //$json = file_get_contents("../API/APIData.json");
-        $env = getenv('DATABASE_URL');
-        echo '-------------';
-        echo $env;
-
         $matchList = json_decode(file_get_contents("../API/APIDataConverted.json"), true);
         $test =  $this->sessionInterface->get('user_id');
 

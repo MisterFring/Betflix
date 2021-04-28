@@ -70,7 +70,7 @@ const betList = new Vue({
         };
     },
     methods: {
-        betClicked(id, homeTeam, awayTeam, date, league, odd, choice){
+        betClicked(id, homeTeam, awayTeam, date, league, odd, choice, homeLogo, awayLogo){
             for (let item of cart.list){
                 if (id === item.id){
                     return  alert("You can't combine two odds on the same match !")
@@ -82,41 +82,26 @@ const betList = new Vue({
                 "homeTeam" : homeTeam,
                 "awayTeam" : awayTeam,
                 "date" : date,
-                "league" : league,
+                "league" : league,                
                 "odd" : odd,
-                "choice" : choice
+                "choice" : choice,
+                "homeLogo": homeLogo,
+                "awayLogo": awayLogo
             }
             cart.list.push(bet)
         }
     }
 });
 
-/*const test = new Vue({
+const countList = new Vue({
     delimiters: ['${', '}'],
-    el: "#test",
-    data: function () {
-        return {
-            'col-12' : true,
-            'col-9' : false
-        };
-    },
-    methods : {
-        getClass(){
-            if (cart.list.length > 0) {
-                return {
-                    'col-12': false,
-                    'col-9': true
-                }
-            }
-            else {
-                return {
-                    'col-12': true,
-                    'col-9': false
-                }
-            }
+    el: "#countList",
+    computed: {
+        getListLength() {
+            return cart.list.length
         }
-    }
-});*/
+    } 
+});
 
 function setCredits(credits){
     document.getElementById('credits').innerHTML = credits
