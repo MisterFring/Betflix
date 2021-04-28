@@ -58,7 +58,7 @@ const cart = new Vue({
             let mul = odd * am;
             return mul.toFixed(2);
         }
-    }
+    	}
 });
 
 const betList = new Vue({
