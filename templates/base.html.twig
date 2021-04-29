@@ -41,6 +41,7 @@
                   </a>
                </li>
                {% else %}
+
                <li class="nav-item">
                   <a class="nav-link" href="/signInPage">Sign in
                   <span class="sr-only">(current)</span>
@@ -53,31 +54,44 @@
             </ul>
          </div>
       </nav>
-
+      {% if onIndex is defined %}
+      <br><br><br>
+      <div class="col-lg-12 text-right">
+         <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" onclick="toggleDarkLight()" @click="toggleDarkLight()"  id="customSwitches">
+            <label class="custom-control-label" style="color:white;"for="customSwitches">Enable Dark Theme</label>
+         </div>
+      </div>
+      {% endif %}
       <div class="container">
          <div class="row">
+            <div class="col-md-4">                
+            </div>
             <div class="col-lg-12 text-center">
                <h1 class="mt-5">
-				<h1 style="font-size:70px;">
-					<font color="white">BET</font><font color="red">FLIX</font>
-				</h1>
+                  <h1 style="font-size:70px;">
+                     <font color="white">BET</font><font color="red">FLIX</font>   
+                  </h1>
                   <h1 style="color: white;">Ligue 1</h1>
                </h1>
             </div>
          </div>
       </div>
+      
+
       {% block login %}{% endblock %}
       {% block myBets %}{% endblock %}
       {% block register %}{% endblock %}
       {% block body %}{% endblock %}
       {% block javascripts %}{% endblock %}
 
+
       <div class="container" style="display: flex; flex-wrap: nowrap; justify-content: space-between;">
          <div style="width: auto;  flex-grow: 2">
             <div id="betList" class="row p-4 p-md-3 justify-content-around">
                {% if matchList is defined %}
                {% for match in matchList %}
-               <div class="card text-center" style="width: 20rem; margin-bottom: 20px;">
+               <div class="card darkmo text-center" style="width: 20rem; margin-bottom: 20px;">
                   <div class="card-body">
                      <div class="row">
                         <div class="col-md-12">
@@ -170,9 +184,7 @@
 			   
             </div>	
 			<br><br><br><br>
-         </div>
-		 
-		 
+         </div>		 
          {% if onIndex is defined %}
          <!-- BOUTTON DU PANIER -->
          <div id="countList">
@@ -220,7 +232,7 @@
                         <div v-for="(choice, index) in list" :key="index" class="card-body" style="padding: 0.25rem;">
                            <!-- DEBUT DU BET CART -->
                            <div class="card">
-                              <div class="card-header container-fluid" id="newsHeading">
+                              <div class="card-header darkmods container-fluid" id="newsHeading">
                                  <div class="row">
                                     <div class="col-md-10">
                                        <h5 class="card-title"><img height="30px" width="30px" v-bind:src="choice.homeLogo"/> ${ choice.homeTeam }</h5>
@@ -246,7 +258,7 @@
                         </div>
                      </div>
                      <div class="card text-white bg-dark text-center p-3 p-md-3" style="margin: auto; overflow-anchor: auto;">
-                        <h5 class="card-title font-bold">Total Odd : ${getTotalOdd}</h5>
+                        <h5 class="card-title font-bold" style="color:white;">Total Odd : ${getTotalOdd}</h5>
                         <input class="form-control" style="text-align: right; width: 50%; margin: auto" type="number" step="0.10" min="0.01" v-model.number="amount" required>
                         <p class="card-title"><span style="color: #FFA500">Potential gain : ${getPotentialGain}</span></p>
                         <button class="btn btn-success" @click="betConfirmed()" type="submit" id="slowToTop">Confirm</button>
@@ -284,20 +296,22 @@
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
    <script src="https://apps.mypurecloud.com/webchat/jsapi-v1.js" type="text/javascript"></script>
    <script type="text/javascript">
+   //START OF DARKMODE
+
       $(function() {
-      $(".chat-open-dialog").click(function() {
-      $(this).toggleClass("active");
-      $('.chat-popup').toggleClass("active");
-      $('.chat-button-destroy').toggleClass("active");
-      });
+         $(".chat-open-dialog").click(function() {
+         $(this).toggleClass("active");
+         $('.chat-popup').toggleClass("active");
+         $('.chat-button-destroy').toggleClass("active");
+       });
       });    
       
       $(function() {
-      $(".chat-button-destroy").click(function() {
-      $('.chat-popup').removeClass("active");
-      $('.chat-open-dialog').removeClass("active");
-      $(this).removeClass("active");
+         $(".chat-button-destroy").click(function() {
+         $('.chat-popup').removeClass("active");
+         $('.chat-open-dialog').removeClass("active");
+         $(this).removeClass("active");
+         });
       });
-      }); 
    </script>
 </html>

@@ -22,6 +22,7 @@ body {
 	border-radius: 12px;
 }
 
+
 .scroller {
 	height: 80%;
 	overflow-y: scroll;
@@ -68,6 +69,47 @@ body {
 	color: white;
 	font-weight: 700;
 }
+
+.darkmo{
+	animation: switchtoLightBackground 1s;
+	background :white;
+}
+.darkmo.p{
+	animation: switchtoLightColor 1s;
+	color :white;
+}
+
+.darkmo.dark-mode{
+	animation: switchtoDarkBackground 1s;
+	background :#333;
+}
+
+.darkmo.dark-mode p{
+	animation: switchtoDarkColor 1s;
+	color :white;
+}
+
+
+@keyframes switchtoLightBackground {
+	from {background-color: #333;}
+	to {background-color: white;}
+  }
+
+@keyframes switchtoLightColor {
+	from {color: #333;}
+	to {color: white;}
+  }
+
+@keyframes switchtoDarkBackground {
+	from {background-color: white;}
+	to {background-color: 333;}
+  }
+
+@keyframes switchtoDarkColor {
+	from {color: white;}
+	to {color: 333;}
+  }
+
 
 .cardDate {
 	background: #FFA500;
@@ -159,6 +201,21 @@ button.chat-button-destroy.active {
 	background: #ea2929;
 	background-size: 28px;
 	cursor: pointer;
+}
+
+
+.chat-popup.dark-mode{
+	background :#333;
+}
+.chat-popup.dark-mode h5{
+	color: black;
+}
+
+.cart_background{
+	background:white;
+}
+.cart_background.dark-mode{
+	background: rgb(41, 41, 41);
 }
 
 .chat-popup {

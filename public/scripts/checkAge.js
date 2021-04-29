@@ -1,4 +1,4 @@
-const majority = 18 * 365 * 24 * 60 * 60  * 1000
+const majority = 16 * 365 * 24 * 60 * 60  * 1000
 
 const signupApp = new Vue({
     el: '#signup-app',
@@ -22,7 +22,7 @@ const signupApp = new Vue({
             console.log(diff, majority)
 
             if (diff <= majority) {
-                return "Must be 18 yorld"
+                return "Must be 16 years old"
             }
         }
     }

@@ -4,8 +4,8 @@
 		<table class="table table-bordered" style="width: 70%" align="center">
 			<thead class="thead-dark">
 				<tr>
-					<th>Odd</th>
-                    <th style="text-align: right">Date</th>
+					<th>Odds and Bets</th>
+                    <th style="text-align: right">Date Of The Bet</th>
 					<th style="text-align: right">Potential Gain</th>
 					<th style="text-align: right">Bet Details</th>
 				</tr>
@@ -16,7 +16,7 @@
                     <span>Odd : </span>
                     <span class="font-weight-bold">{{ bet.oddsTotal }}</span>
 				    /
-                    <span>Amount : </span>
+                    <span>Bet : </span>
                     <span class="font-weight-bold">{{ bet.betAmount }}</span>
 					</td>
                     <td style="text-align: right">
@@ -25,7 +25,7 @@
 					<td style="text-align: right">
 						<span style="color: #666666;">{{ (bet.betAmount *  bet.oddsTotal)|round(2) }}€</span>
 					</td>
-					<td align="right" style="background-color: white">
+					<td align="right">
 						<div class="btn-group dropleft">
 							<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Details

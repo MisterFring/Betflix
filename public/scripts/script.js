@@ -106,3 +106,13 @@ const countList = new Vue({
 function setCredits(credits){
     document.getElementById('credits').innerHTML = credits
 }
+
+function toggleDarkLight() {
+    var $bet_card = $(".darkmo");
+    var $cart = $(".chat-popup");
+    var $cart_background= $(".cart_background");
+    $bet_card.toggleClass("dark-mode light-mode")
+    $cart.toggleClass("dark-mode light-mode")
+    $cart_background.toggleClass("dark-mode light-mode")
+    
+  }

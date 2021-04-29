@@ -183,9 +183,9 @@ class DefaultController extends AbstractController
 
         $userAge = $dateNow->diff($userBirthDate);
 
-        /* check if the user is > 18 years old  */
+        /* check if the user is > 16 years old  */
 
-        if ($userAge->y < 18){
+        if ($userAge->y < 16){
             $display = $this->twig->render('/Home/login.html.twig', [
                 'error' => 'You must be of legal age to enjoy BETFLIX',
                 'signIn' => true,
