@@ -1,0 +1,309 @@
+
+body {
+	background: url(http://img.praaly.fr/u/praaly/2JjGOoUBPncenWm8xrMB.png);
+	background-repeat: no-repeat;
+	background-size: 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.button1 {
+	font-size: 20px;
+	padding: 2%;
+	background-color: #4CAF50;
+	border: none;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	width: 20%;
+	border-radius: 12px;
+}
+
+.scroller {
+	height: 80%;
+	overflow-y: scroll;
+	scrollbar-color: rebeccapurple green;
+	scrollbar-width: thin;
+}
+
+.scroller * {
+	overflow-anchor: none;
+}
+
+.team {
+	font-weight: 700;
+}
+
+.date {
+	background: #343a40;
+	color: #ffffff;
+	display: inline-block;
+	font-family: 'Lato', sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 12px;
+	letter-spacing: 1px;
+	margin: 0 0 30px;
+	padding: 10px 15px 8px;
+	text-transform: uppercase;
+	border-radius: .25rem;
+}
+
+.stadium {
+	font-family: "Lucida Grande", Tahoma;
+	font-size: 10px;
+	font-weight: lighter;
+	font-variant: normal;
+	text-transform: uppercase;
+	color: #666666;
+	margin-top: 10px;
+	text-align: center!important;
+	letter-spacing: 0.3em;
+}
+
+.cardButton {
+	color: white;
+	font-weight: 700;
+}
+
+.cardDate {
+	background: #FFA500;
+	color: white;
+	display: inline-block;
+	font-family: 'Lato', sans-serif;
+	font-size: 10px;
+	font-weight: bold;
+	line-height: 10px;
+	letter-spacing: 1px;
+	padding: 5px;
+	text-transform: uppercase;
+	border-radius: .25rem;
+}
+
+.cardInfo {
+	font-weight: lighter;
+	color: #666666;
+}
+
+.cardNb {
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.chat-button-destroy:focus,
+.chat-open-dialog:focus {
+	outline: none;
+}
+
+.chat-button-destroy span.fa-close:before {
+	font-size: 24px;
+	color: white;
+	text-align: center;
+	margin: -4px 0 0;
+	display: block;
+}
+
+.chat-open-dialog span.fa-question:before {
+	background: white;
+	color: #38CBD3;
+	font-size: 24px;
+	display: block;
+	padding: 4px 8px;
+	border-radius: 6px;
+	opacity: 1;
+	-webkit-transition: all ease .5s;
+	-moz-transition: all ease .5s;
+	-ms-transition: all ease .5s;
+	-o-transition: all ease .5s;
+	transition: all ease .5s;
+}
+
+button.chat-open-dialog {
+	z-index: 2147483000;
+	position: fixed;
+	border: none;
+	bottom: 20px;
+	right: 40px;
+	width: 280px;
+	height: 60px;
+	box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06), 0 2px 32px rgba(0, 0, 0, 0.16);
+	background: #ea2929;
+	background-size: 28px;
+	cursor: pointer;
+}
+
+button.chat-button-destroy {
+	opacity: 0;
+	z-index: -5;
+	position: fixed;
+	bottom: 20px;
+	right: 40px;
+	width: 60px;
+	height: 60px;
+	border: none;
+}
+
+button.chat-button-destroy.active {
+	opacity: 1;
+	z-index: 2147483000;
+	position: fixed;
+	border: none;
+	bottom: 20px;
+	right: 40px;
+	width: 370px;
+	height: 60px;
+	box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06), 0 2px 32px rgba(0, 0, 0, 0.16);
+	background: #ea2929;
+	background-size: 28px;
+	cursor: pointer;
+}
+
+.chat-popup {
+	position: fixed;
+	bottom: 80px;
+	right: 40px;
+	width: 370px;
+	max-height: 590px;
+	height: 0;
+	opacity: 0;
+	-webkit-transition: all ease .5s;
+	-moz-transition: all ease .5s;
+	-ms-transition: all ease .5s;
+	-o-transition: all ease .5s;
+	transition: all ease .5s;
+	background: white;
+	overflow: hidden;
+}
+
+.chat-popup.active {
+	opacity: 1;
+	z-index: 2147483000;
+	height: calc(100% - 95px - 20px);
+	max-height: 532px;
+	-webkit-box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
+	-moz-box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
+	box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
+	border-radius: 8px 8px 0px 0px;
+	-webkit-transition: all ease .5s;
+	-moz-transition: all ease .5s;
+	-ms-transition: all ease .5s;
+	-o-transition: all ease .5s;
+	transition: all ease .5s;
+}
+
+.chat-popup.chat-init .chat-windows {
+	transform: translateX(-370px);
+	-webkit-transition: all ease .5s;
+	-moz-transition: all ease .5s;
+	-ms-transition: all ease .5s;
+	-o-transition: all ease .5s;
+	transition: all ease .5s;
+}
+
+.chat-popup .chat-windows {
+	width: 200%;
+}
+
+.chat-popup .chat-windows .chat-window-one,
+.chat-popup .chat-windows .chat-window-two {
+	float: left;
+	width: 50%;
+	height: 100%;
+}
+
+.chat-popup .chat-header {
+	background: #38CBD3;
+	border-radius: 8px 8px 0 0;
+	padding: 35px 0;
+	-webkit-transition: all ease .5s;
+	-moz-transition: all ease .5s;
+	-ms-transition: all ease .5s;
+	-o-transition: all ease .5s;
+	transition: all ease .5s;
+}
+
+.chat-popup .chat-header h4 {
+	color: white;
+	text-align: center;
+	font-weight: 600;
+	margin: 0;
+	padding: 0 0 10px;
+}
+
+.chat-popup .chat-header .chat-button-start {
+	background: white;
+	-webkit-border-radius: 150px;
+	-moz-border-radius: 150px;
+	border-radius: 150px;
+	padding: 15px 25px;
+	display: block;
+	margin: 0 auto;
+	font-size: 14px;
+	border: none;
+}
+
+.chat-popup .chat-header .chat-button-start span {
+	padding-left: 5px;
+	font-family: "Proxima Nova", 'Montserrat', arial, sans-serif;
+}
+
+.chat-popup .chat-phone-number {
+	text-align: center;
+	font-size: 18px;
+	letter-spacing: 1px;
+	padding: 15px 0;
+	background: #27AAC2;
+	color: white;
+}
+
+.chat-popup .chat-phone-number small {
+	text-align: center;
+	display: block;
+	font-size: 13px;
+	opacity: .7;
+	letter-spacing: normal;
+	line-height: normal;
+	padding: 0 0 10px;
+}
+
+.chat-popup div#chatContainer {
+	height: 100%;
+	min-height: 400px;
+}
+
+.chat-popup form {
+	margin: 15px 0 5px;
+}
+
+.chat-popup form table.webchat-config {
+	width: 100%;
+}
+
+.chat-popup form table.webchat-config input {
+	margin: 0 auto 10px;
+	padding: 8px 10px;
+	display: block;
+	width: 70%;
+	border-radius: 50px;
+	text-align: center;
+	font-size: 14px;
+	border: none;
+}
+
+form#chatForm button.chat-button.inactive-chat.active,
+form#chatForm button.chat-button {
+	-webkit-transition: all ease .5s;
+	-moz-transition: all ease .5s;
+	-ms-transition: all ease .5s;
+	-o-transition: all ease .5s;
+	transition: all ease .5s;
+}
+
+form#chatForm button.chat-button.inactive-chat.active {
+	transform: rotate(90deg);
+	background-size: 0;
+}
+

@@ -1,565 +1,303 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="UTF-8">
-	<title>BETFLIX</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	<link rel="shortcut icon" type="image/png" href="/img/money.png"/>
-	<script src="https://code.jquery.com/jquery.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+   <head>
+      <meta charset="UTF-8">
+      <title>BETFLIX</title>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+      <link rel="shortcut icon" type="image/png" href="/img/money.png"/>
+      <script src="https://code.jquery.com/jquery.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-	<style>
-		body {
-			background: url(http://img.praaly.fr/u/praaly/2JjGOoUBPncenWm8xrMB.png);
-			background-repeat: no-repeat;
-			background-size: 100%;
-			-webkit-background-size: cover;
-			-moz-background-size: cover;
-			-o-background-size: cover;			
-			background-size: cover;
-		}
-		
-		.button1 {
-			font-size: 20px;
-			padding: 2%;
-			background-color: #4CAF50;
-			border: none;
-			color: white;
-			text-align: center;
-			text-decoration: none;
-			display: inline-block;
-			width: 20%;
-			border-radius: 12px;
-		}
-		.scroller {
-			height: 80%;
-			overflow-y: scroll;
-			scrollbar-color: rebeccapurple green;
-			scrollbar-width: thin;
-		}
-		.scroller * {
-			overflow-anchor: none;
-		}
-		.team {
-			font-weight: 700;
-		}
-		.date { 
-			background: #343a40; 
-			color: #ffffff; 
-			display: inline-block; 
-			font-family: 'Lato', sans-serif; 
-			font-size: 12px; font-weight: bold; 
-			line-height: 12px; letter-spacing: 1px; 
-			margin: 0 0 30px; 
-			padding: 10px 15px 8px; 
-			text-transform: uppercase;
-			border-radius: .25rem;
-		}
+	  <link rel="stylesheet" href="css/bet.css">
+	  
 
-		.chat-button-destroy:focus, .chat-open-dialog:focus {
-    		outline: none;
-		}
+   </head>
+   <body>
+      <!-- Navigation bar-->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top" style="position: fixed; z-index: 10; width: 100%">
+         {% if connected is defined and connected is not null %}
+         <a class="navbar-brand" href="/">
+         {{ connected.pseudo }} - <span id="credits">{{ connected.credits }}</span> €
+         </a>
+         {% else %}
+         <a class="navbar-brand" href="/">
+         BETFLIX
+         </a>
+         {% endif %}
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+         </button>	
 
+         <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+               {% if connected is defined and connected is not null %}
+               <li class="nav-item">
+                  <a class="nav-link" href="/myBets">My Bets
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="/logOut">Log Out
+                  </a>
+               </li>
+               {% else %}
+               <li class="nav-item">
+                  <a class="nav-link" href="/signInPage">Sign in
+                  <span class="sr-only">(current)</span>
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="/logInPage">Log in</a>
+               </li>
+               {% endif %}
+            </ul>
+         </div>
+      </nav>
 
-.chat-button-destroy span.fa-close:before {
-    font-size: 24px;
-    color: white;
-    text-align: center;
-    margin: -4px 0 0;
-    display: block;
-}
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-12 text-center">
+               <h1 class="mt-5">
+				<h1 style="font-size:70px;">
+					<font color="white">BET</font><font color="red">FLIX</font>
+				</h1>
+                  <h1 style="color: white;">Ligue 1</h1>
+               </h1>
+            </div>
+         </div>
+      </div>
+      {% block login %}{% endblock %}
+      {% block myBets %}{% endblock %}
+      {% block register %}{% endblock %}
+      {% block body %}{% endblock %}
+      {% block javascripts %}{% endblock %}
 
-.chat-open-dialog span.fa-question:before {
-  background:white;
-  color:#38CBD3;
-  font-size: 24px;
-  display:block;
-  padding: 4px 8px;
-  border-radius: 6px;
-  opacity: 1;
-  -webkit-transition: all ease .5s;
-  -moz-transition: all ease .5s;
-  -ms-transition: all ease .5s;
-  -o-transition: all ease .5s;
-  transition: all ease .5s;
-}
+      <div class="container" style="display: flex; flex-wrap: nowrap; justify-content: space-between;">
+         <div style="width: auto;  flex-grow: 2">
+            <div id="betList" class="row p-4 p-md-3 justify-content-around">
+               {% if matchList is defined %}
+               {% for match in matchList %}
+               <div class="card text-center" style="width: 20rem; margin-bottom: 20px;">
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-md-12">
+                           <div class="row">
+                              <div class="col-md-6">
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                       <img alt="Bootstrap Image Preview" height="80px" width="80px" src={{ match.homeLogo }} />
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                       <div class="equipe" style="height: 30px;">
+                                          <p class="team"> {{ match.homeTeam }} </p>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-md-6">
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                       <img alt="Bootstrap Image Preview" height="80px" width="80px"  src={{ match.awayLogo }} />
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                       <div class="equipe" style="height: 30px;">
+                                          <p  class="team"> {{ match.awayTeam }} </p>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <hr/>
+                           <p class="date"> {{ match.date }} </p>
+                           <p class="stadium"> {{ match.stadium }} </p>
+                           <br>
+                           <div class="row">
+                              <div class="col-sm-12" text-center>	
+                                 <button type="button" style="width: 80px;" class="btn btn-success" @click="betClicked
+                                    (
+                                    '{{ match.id }}',
+                                    '{{ match.homeTeam }}',
+                                    '{{ match.awayTeam }}',
+                                    '{{ match.date }}',
+                                    '{{ match.leagueName }}',
+                                    '{{ match.homeOdd }}',
+                                    'home',
+                                    '{{ match.homeLogo }}',
+                                    '{{ match.awayLogo }}'
+                                    )">
+                                 {{ match.homeOdd }}
+                                 </button>
+                                 <button type="button" style="width: 80px;" class="btn btn-warning" @click="betClicked
+                                    (
+                                    '{{ match.id }}',
+                                    '{{ match.homeTeam }}',
+                                    '{{ match.awayTeam }}',
+                                    '{{ match.date }}',
+                                    '{{ match.leagueName }}',
+                                    '{{ match.homeOdd }}',
+                                    'draw',
+                                    '{{ match.homeLogo }}',
+                                    '{{ match.awayLogo }}'
+                                    )">
+                                 {{ match.drawOdd }}
+                                 </button>						
+                                 <button type="button" style="width: 80px;" class="btn btn-success" @click="betClicked
+                                    (
+                                    '{{ match.id }}',
+                                    '{{ match.homeTeam }}',
+                                    '{{ match.awayTeam }}',
+                                    '{{ match.date }}',
+                                    '{{ match.leagueName }}',
+                                    '{{ match.awayOdd }}',
+                                    'away',
+                                    '{{ match.homeLogo }}',
+                                    '{{ match.awayLogo }}'
+                                    )">
+                                 {{ match.awayOdd }}
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>			   
+               {% endfor %}
+               {% endif %}
+			   
+            </div>	
+			<br><br><br><br>
+         </div>
+		 
+		 
+         {% if onIndex is defined %}
+         <!-- BOUTTON DU PANIER -->
+         <div id="countList">
+            <button  class="chat-open-dialog">
+               <div class="container-fluid">
+                  <div class="row">
+                     <div class="col-md-10">
+                        <span class="cardButton">Your cart - ${getListLength} bet(s)</span>
+                     </div>
+                     <div class="col-md-2">
+                        <span class="cardButton">/\</span>
+                     </div>
+                  </div>
+               </div>
+            </button>
+            <button class="chat-button-destroy">
+               <div class="container-fluid">
+                  <div class="row">
+                     <div class="col-md-10">
+                        <span class="cardButton">Your cart - ${getListLength} bet(s)</span>
+                     </div>
+                     <div class="col-md-2">
+                        <span class="cardButton">\/</span>
+                     </div>
+                  </div>
+               </div>
+            </button>
+         </div>
+		 {% endif %}
+         <!-- FIN DU BOUTTON DU PANIER -->
+         <div class="chat-popup">
+            <div class="chat-windows">
+               <div id="cart" class="scroller" style="flex-grow: 1; width: 50% ; overflow-y: scroll;" >
+                  <div v-if="response.length > 0">
+                     <p :style="[error ? { 'color' : 'red' } : {'color' : 'green'}]" style="text-align: center">
+                        ${response}
+                     </p>
+                     <p v-if="response === 'You have to be connected to bet !'" style="text-align: center">
+                        <a href="/logInPage"><button class="button1">Log In</button></a>
+                     </p>
+                  </div>
+                  <div class="card-header bg-dark"><span class="cardButton">Bets (combined betting)</span></div>
+                  <div v-if="list.length > 0">
+                     <div style="overflow-y: scroll; border:10px; border: 10px; border-color: black; overflow: auto; overflow-y: scroll; position: relative; height: 300px;">
+                        <div v-for="(choice, index) in list" :key="index" class="card-body" style="padding: 0.25rem;">
+                           <!-- DEBUT DU BET CART -->
+                           <div class="card">
+                              <div class="card-header container-fluid" id="newsHeading">
+                                 <div class="row">
+                                    <div class="col-md-10">
+                                       <h5 class="card-title"><img height="30px" width="30px" v-bind:src="choice.homeLogo"/> ${ choice.homeTeam }</h5>
+                                       <h5 class="card-title"><img height="30px" width="30px" v-bind:src="choice.awayLogo"/> ${ choice.awayTeam }</h5>
+                                    </div>
+                                    <div class="col-md-2">
+                                       <button type="button" class="close" @click="deleteChoice(choice)" aria-label="Close">
+                                       <span aria-hidden="true">&times;</span>
+                                       </button>
+                                    </div>
+                                 </div>
+                                 <p style="float: left; transform: translateY(100%);">
+                                    <span class="cardDate">${ choice.date }</span>
+                                    {# <span class="stadium">${ choice.league }</span> #}
+                                 </p>
+                                 <p style="float: right; transform: translateY(100%);">
+                                    <span class="cardInfo">[${ choice.choice }]</span>
+                                    <span class="cardNb">${ choice.odd }</span>
+                                 </p>
+                              </div>
+                           </div>
+                           <!-- FIN DU BET CART -->
+                        </div>
+                     </div>
+                     <div class="card text-white bg-dark text-center p-3 p-md-3" style="margin: auto; overflow-anchor: auto;">
+                        <h5 class="card-title font-bold">Total Odd : ${getTotalOdd}</h5>
+                        <input class="form-control" style="text-align: right; width: 50%; margin: auto" type="number" step="0.10" min="0.01" v-model.number="amount" required>
+                        <p class="card-title"><span style="color: #FFA500">Potential gain : ${getPotentialGain}</span></p>
+                        <button class="btn btn-success" @click="betConfirmed()" type="submit" id="slowToTop">Confirm</button>
+                     </div>
+                  </div>
+                  <div class="chat-window-two">
+                     <div id="chatContainer" style="height: 600px;"></div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+      <script src="/scripts/script.js"></script>
+      {% block scripts_after %}{% endblock %}
+   </body>
 
+   <footer class="bg-dark text-center text-white" style="position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: red;
+   color: white;
+   text-align: center;">
 
-
-
-/* POUR CLIQUER SUR LE PANIER */
-button.chat-open-dialog {
-  z-index: 2147483000;
-  position: fixed;
-  border: none;
-  bottom: 20px;
-  right: 40px;
-  width: 280px;
-  height: 60px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06), 0 2px 32px rgba(0, 0, 0, 0.16);
-  background: #ea2929;
-  background-size: 28px;
-  cursor: pointer;
-}
-
-
-button.chat-button-destroy {
-  opacity: 0;
-  z-index: -5;
-  position: fixed;
-  bottom: 20px;
-  right: 40px;
-  width: 60px;
-  height: 60px;
-
-  border: none;
-
-}
-
-/* MODIFER LUI UNE FOIS CLIQUER*/
-button.chat-button-destroy.active {
-  opacity: 1;
-  z-index: 2147483000;
-  position: fixed;
-  border: none;
-  bottom: 20px;
-  right: 40px;
-  width: 370px;
-  height: 60px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06), 0 2px 32px rgba(0, 0, 0, 0.16);
-  background: #ea2929;
-  background-size: 28px;
-  cursor: pointer;
-}
-
-.chat-popup {
-  position: fixed;
-  bottom: 80px;
-  right: 40px;
-  width: 370px;
-  max-height: 590px;
-  height: 0;
-  opacity: 0;
-  -webkit-transition: all ease .5s;
-  -moz-transition: all ease .5s;
-  -ms-transition: all ease .5s;
-  -o-transition: all ease .5s;
-  transition: all ease .5s;
-  background: white;
-  overflow: hidden;
-}
-.chat-popup.active {
-  opacity: 1;
-  z-index: 2147483000;
-  height: calc(100% - 95px - 20px);
-  max-height: 532px;
-  -webkit-box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
-  -moz-box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
-  box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
-  border-radius: 8px 8px 0px 0px;
-  -webkit-transition: all ease .5s;
-  -moz-transition: all ease .5s;
-  -ms-transition: all ease .5s;
-  -o-transition: all ease .5s;
-  transition: all ease .5s;
-}
-.chat-popup.chat-init .chat-windows {
-  transform: translateX(-370px);
-  -webkit-transition: all ease .5s;
-  -moz-transition: all ease .5s;
-  -ms-transition: all ease .5s;
-  -o-transition: all ease .5s;
-  transition: all ease .5s;
-}
-.chat-popup .chat-windows {
-  width: 200%;
-}
-.chat-popup .chat-windows .chat-window-one, .chat-popup .chat-windows .chat-window-two {
-  float: left;
-  width: 50%;
-  height: 100%;
-}
-.chat-popup .chat-header {
-  background: #38CBD3;
-  border-radius: 8px 8px 0 0;
-  padding: 35px 0;
-  -webkit-transition: all ease .5s;
-  -moz-transition: all ease .5s;
-  -ms-transition: all ease .5s;
-  -o-transition: all ease .5s;
-  transition: all ease .5s;
-}
-.chat-popup .chat-header h4 {
-  color: white;
-  text-align: center;
-  font-weight: 600;
-  margin: 0;
-  padding: 0 0 10px;
-}
-.chat-popup .chat-header .chat-button-start {
-  background: white;
-  -webkit-border-radius: 150px;
-  -moz-border-radius: 150px;
-  border-radius: 150px;
-  padding: 15px 25px;
-  display: block;
-  margin: 0 auto;
-  font-size: 14px;
-  border: none;
-}
-.chat-popup .chat-header .chat-button-start span {
-  padding-left: 5px;
-  font-family: "Proxima Nova", 'Montserrat', arial, sans-serif;
-}
-.chat-popup .chat-phone-number {
-  text-align: center;
-  font-size: 18px;
-  letter-spacing: 1px;
-  padding: 15px 0;
-  background: #27AAC2;
-  color: white;
-}
-.chat-popup .chat-phone-number small {
-  text-align: center;
-  display: block;
-  font-size: 13px;
-  opacity: .7;
-  letter-spacing: normal;
-  line-height: normal;
-  padding: 0 0 10px;
-}
-.chat-popup div#chatContainer {
-  height: 100%;
-  min-height: 400px;
-}
-.chat-popup form {
-  margin: 15px 0 5px;
-}
-.chat-popup form table.webchat-config {
-  width: 100%;
-}
-.chat-popup form table.webchat-config input {
-  margin: 0 auto 10px;
-  padding: 8px 10px;
-  display: block;
-  width: 70%;
-  border-radius: 50px;
-  text-align: center;
-  font-size: 14px;
-  border: none;
-}
-
-form#chatForm button.chat-button.inactive-chat.active, form#chatForm button.chat-button {
-  -webkit-transition: all ease .5s;
-  -moz-transition: all ease .5s;
-  -ms-transition: all ease .5s;
-  -o-transition: all ease .5s;
-  transition: all ease .5s;
-}
-form#chatForm button.chat-button.inactive-chat.active {
-  transform: rotate(90deg);
-  background-size: 0;
-}
-
-</style>
-</head>
-
-<body>
-
-<!-- Navigation bar-->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top" style="position: fixed; z-index: 10; width: 100%">
-		{% if connected is defined and connected is not null %}
-			<a class="navbar-brand" href="/">
-				{{ connected.pseudo }} - <span id="credits">{{ connected.credits }}</span> €
-			</a>
-		{% else %}
-			<a class="navbar-brand" href="/">
-				BETFLIX
-			</a>
-		{% endif %}
-
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarResponsive">
-			<ul class="navbar-nav ml-auto">
-				{% if connected is defined and connected is not null %}
-					<li class="nav-item">
-						<a class="nav-link" href="/myBets">My Bets
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/logOut">Log Out
-						</a>
-					</li>
-				{% else %}
-					<li class="nav-item">
-						<a class="nav-link" href="/signInPage">Sign in
-							<span class="sr-only">(current)</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/logInPage">Log in</a>
-					</li>
-				{% endif %}
-			</ul>
-		</div>
-	</nav>
-
-<div class="container">
-	<div class="row">
-		<div class="col-lg-12 text-center">
-			<h1 class="mt-5">
-				<h1 style="color: lightslategrey; margin-top: 7%">Ligue 1</h1>
-			</h1>
-		</div>
+	<!-- Copyright -->
+	<div class="text-center p-2" style="background-color: rgba(0, 0, 0, 0.2);">	  
+	  <p>©2021 Copyright BETFLIX</p>
 	</div>
-</div>
-
-{% block myBets %}{% endblock %}
-{% block login %}{% endblock %}
-
-{% block register %}{% endblock %}
-{% block body %}{% endblock %}
-{% block javascripts %}{% endblock %}
+	<!-- Copyright -->
+  </footer>
 
 
-
-<div class="container" style="display: flex; flex-wrap: nowrap; justify-content: space-between;">
-		<div style="width: auto;  flex-grow: 2">
-			<div id="betList" class="row p-4 p-md-3 justify-content-around">
-
-				{% if matchList is defined %}
-					{% for match in matchList %}
-					<!-- DEBUT DE LA CARTE -->
-				 <div class="card text-center" style="width: 20rem; margin-bottom: 20px;">
-						<div class="card-body">
-						<div class="row">
-							<div class="col-md-12">
-								<div class="row">
-									<div class="col-md-6">
-										<div class="row">
-											<div class="col-md-12">
-												<img alt="Bootstrap Image Preview" height="80px" width="80px" src={{ match.homeLogo }} />
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-12">
-												<div class="equipe" style="height: 30px;">
-													<p class="team"> {{ match.homeTeam }} </p>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="row">
-											<div class="col-md-12">
-												<img alt="Bootstrap Image Preview" height="80px" width="80px"  src={{ match.awayLogo }} />
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-12">
-												<div class="equipe" style="height: 30px;">
-													<p  class="team"> {{ match.awayTeam }} </p>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<hr/>
-								<p class="date"> {{ match.date }} </p>
-								<p> {{ match.stadium }} </p>
-								<br>
-								<div class="row">
-									<!-- BUTTON COTE DOMICILE -->
-									<div class="col-md-4">	
-										<button type="button" style="width: 80px;" class="btn btn-success" @click="betClicked
-										(
-										'{{ match.id }}',
-										'{{ match.homeTeam }}',
-										'{{ match.awayTeam }}',
-										'{{ match.date }}',
-										'{{ match.leagueName }}',
-										'{{ match.homeOdd }}',
-										'home',
-										'{{ match.homeLogo }}',
-										'{{ match.awayLogo }}'
-										)">
-											{{ match.homeOdd }}
-										</button>
-									</div>
-
-									<!-- BUTTON COTE NUL -->
-									<div class="col-md-4">	
-										<button type="button" style="width: 80px;" class="btn btn-success" @click="betClicked
-										(
-										'{{ match.id }}',
-										'{{ match.homeTeam }}',
-										'{{ match.awayTeam }}',
-										'{{ match.date }}',
-										'{{ match.leagueName }}',
-										'{{ match.homeOdd }}',
-										'draw',
-										'{{ match.homeLogo }}',
-										'{{ match.awayLogo }}'
-										)">
-											{{ match.drawOdd }}
-										</button>
-									</div>
-
-									<!-- BUTTON COTE EXTERIEUR -->
-									<div class="col-md-4">										
-										<button type="button" style="width: 80px;" class="btn btn-success" @click="betClicked
-										(
-										'{{ match.id }}',
-										'{{ match.homeTeam }}',
-										'{{ match.awayTeam }}',
-										'{{ match.date }}',
-										'{{ match.leagueName }}',
-										'{{ match.awayOdd }}',
-										'away',
-										'{{ match.homeLogo }}',
-										'{{ match.awayLogo }}'
-										)">
-											{{ match.awayOdd }}
-										</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-					{% endfor %}
-				{% endif %}
-			</div>
-		</div>				
-		
-			<!-- BOUTTON DU PANIER -->
-			<div id="countList"> 	
-				<button  class="chat-open-dialog">
-						<div class="container-fluid">
-							<div class="row">
-								<div class="col-md-10">
-									YOUR CART - ${getListLength} bet(s)
-								</div>
-								<div class="col-md-2">
-									/\
-								</div>
-							</div>
-						</div>					
-						</button>
-					<button class="chat-button-destroy">
-						<div class="container-fluid">
-							<div class="row">
-								<div class="col-md-10">
-									YOUR CART - ${getListLength} bet(s)
-								</div>
-								<div class="col-md-2">
-									\/
-								</div>
-							</div>
-						</div>	
-					</button>
-				</div>
-				<!-- FIN DU BOUTTON DU PANIER -->
-				
-				  <div class="chat-popup">
-					<div class="chat-windows">
-						<div id="cart" class="scroller" style="flex-grow: 1; width: 50% ; overflow-y: scroll;" >
-							<div v-if="response.length > 0">
-								<p :style="[error ? { 'color' : 'red' } : {'color' : 'green'}]" style="text-align: center">
-									${response}
-								</p>
-								<p v-if="response === 'You have to be connected to bet !'" style="text-align: center">
-									<a href="/logInPage"><button class="button1">Log In</button></a>
-								</p>
-							</div>							
-							<div class="card-header">Bets (combined betting)</div>
-							<div v-if="list.length > 0">
-							<div style="overflow-y: scroll; border:10px; border: 10px; border-color: black; overflow: auto; overflow-y: scroll; position: relative; height: 300px;">
-								<div v-for="(choice, index) in list" :key="index" class="card-body" style="padding: 0.25rem;">
-									<!-- DEBUT DU BET CART -->
-									
-									<div class="card">
-										<div class="card-header container-fluid" id="newsHeading">
-											<div class="row">
-												<div class="col-md-10">
-													<h5 class="card-title"><img height="30px" width="30px" v-bind:src="choice.homeLogo"/> ${ choice.homeTeam }</h5>
-													<h5 class="card-title"><img height="30px" width="30px" v-bind:src="choice.awayLogo"/> ${ choice.awayTeam }</h5>
-												</div>
-												<div class="col-md-2">
-												<button type="button" class="close" @click="deleteChoice(choice)" aria-label="Close">
-												  <span aria-hidden="true">&times;</span>
-												</button>
-												</div>
-											</div>
-
-											<p style="float: left; transform: translateY(100%);">
-												${ choice.date } -
-												${ choice.league }
-											</p>
-											<p style="float: right; transform: translateY(100%);">
-												${ choice.choice } -
-												${ choice.odd }
-											</p>
-										</div>
-									</div>
-									<!-- FIN DU BET CART -->
-								</div>
-							</div>
-				
-								<div class="card text-white bg-success text-center p-3 p-md-3" style="margin: auto; overflow-anchor: auto;">
-									<h5 class="card-title font-italic">Total Odd : ${getTotalOdd}</h5>
-									<input class="form-control" style="text-align: right; width: 50%; margin: auto" type="number" step="0.10" min="0.01" v-model.number="amount" required>
-									<p class="font-italic">Potential gain : ${getPotentialGain}</p>
-									<button class="btn btn-warning" @click="betConfirmed()" type="submit" id="slowToTop">Confirm</button>
-								</div>
-							</div>
-						
-					  
-					  <div class="chat-window-two">
-						<div id="chatContainer" style="height: 600px;">
-						</div>
-					  </div>
-					</div>
-					</div>
-				  </div>
-
-
-
-
-</div>
-
-
-<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-<script src="/scripts/script.js"></script>
-
-{% block scripts_after %}{% endblock %}
-</body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-
-  <script src="https://apps.mypurecloud.com/webchat/jsapi-v1.js" type="text/javascript"></script>
-
-  <script type="text/javascript">
-    $(function() {
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+   <script src="https://apps.mypurecloud.com/webchat/jsapi-v1.js" type="text/javascript"></script>
+   <script type="text/javascript">
+      $(function() {
       $(".chat-open-dialog").click(function() {
-        $(this).toggleClass("active");
-        $('.chat-popup').toggleClass("active");
-        $('.chat-button-destroy').toggleClass("active");
+      $(this).toggleClass("active");
+      $('.chat-popup').toggleClass("active");
+      $('.chat-button-destroy').toggleClass("active");
       });
-    });    
-
-    $(function() {
+      });    
+      
+      $(function() {
       $(".chat-button-destroy").click(function() {
-        $('.chat-popup').removeClass("active");
-        $('.chat-open-dialog').removeClass("active");
-        $(this).removeClass("active");
+      $('.chat-popup').removeClass("active");
+      $('.chat-open-dialog').removeClass("active");
+      $(this).removeClass("active");
       });
-    }); 
-  </script>
-
+      }); 
+   </script>
 </html>

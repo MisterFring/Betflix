@@ -13,17 +13,17 @@
 			{% for bet in bets %}
 				<tr style="background-color: {{ bet.color }}">
 					<td>
-                    <span class="font-italic">Odd : </span>
+                    <span>Odd : </span>
                     <span class="font-weight-bold">{{ bet.oddsTotal }}</span>
 				    /
-                    <span class="font-italic">Amount : </span>
+                    <span>Amount : </span>
                     <span class="font-weight-bold">{{ bet.betAmount }}</span>
 					</td>
                     <td style="text-align: right">
                         {{ bet.betDate }}
                     </td>
 					<td style="text-align: right">
-						{{ (bet.betAmount *  bet.oddsTotal)|round(2) }}€
+						<span style="color: #666666;">{{ (bet.betAmount *  bet.oddsTotal)|round(2) }}€</span>
 					</td>
 					<td align="right" style="background-color: white">
 						<div class="btn-group dropleft">
@@ -32,9 +32,9 @@
 							</button>
 							<div class="dropdown-menu">
 								{% for item in bet.details %}
-									<a class="dropdown-item" href="#">{{ item.match }}
-										-
-										{{ item.odd }} - [ {{ item.choice }} ]</a>
+									<a class="dropdown-item" href="#">
+									<span class="team">{{ item.match }} - {{ item.odd }}</span>
+									<span style="font-weight: lighter;color: #666666;">[{{ item.choice }}]</a>
 								{% endfor %}
 							</div>
 						</div>

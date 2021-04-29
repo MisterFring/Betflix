@@ -118,6 +118,7 @@ class DefaultController extends AbstractController
         $display = $this->twig->render('/base.html.twig', [
             'connected' => $user,
             'matchList' => $matchList["data"],
+            'onIndex' => true
         ]);
         return new Response($display);
     }
