@@ -19,27 +19,27 @@ function checkEqualityOnPasswords(){
     var error = "";
     var valid = true;
     if (pass.length < 8) {
-      error += "Mot de passe trop petit (< 8 caractères) !<br>";
+      error += "Password too small (< 8 characters) !<br>";
       valid = false;
     }
     if (pass.length > 20) {
-      error += "Mot de passe trop long (> 20 caractères) !<br>";
+      error += "Password too long (> 20 characters) !<br>";
       valid = false;
     }
     if (!/\d/.test(pass)) {
-      error += "Doit contenir au moins un chiffre !<br>";
+      error += "Must contain at least one number !<br>";
       valid = false;
     }
     if (!/[a-z]/.test(pass)) {
-      error += "Doit contenir au moins une minuscule !<br>";
+      error += "Must contain at least one lowercase letter !<br>";
       valid = false;
     }
     if (!/[A-Z]/.test(pass)) {
-      error += "Doit contenir au moins une majuscule !<br>";
+      error += "Must contain at least one capital letter !<br>";
       valid = false;
     }
     if (!/\W/.test(pass)) {
-      error += "Doit contenir au moins un caractère spécial (@,#,...) !";
+      error += "Must contain at least one special character (#,@,...) !";
       valid = false;
     }
     if (valid === false) {
@@ -47,7 +47,7 @@ function checkEqualityOnPasswords(){
       document.getElementById("confirm_password").disabled = true;
     }
     else {
-      error = "Mot de passe sécurisé !";
+      error = "Secure password !";
       document.getElementById("confirm_password").disabled = false;
   
     }

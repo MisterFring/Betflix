@@ -17,6 +17,10 @@ const cart = new Vue({
             if (this.amount <= 0){
                 this.error = true;
                 this.response = "You can't bet 0 €, aren't you a bit stupid ?";
+                document.getElementById('alertBet').style.display = 'block';
+                setTimeout(function() {
+                    document.getElementById('alertBet').style.display = 'none';
+                }, 2000);               
                 return false;
             }
 
@@ -38,6 +42,10 @@ const cart = new Vue({
             }
 
             this.response = res.data.message;
+            document.getElementById('alertBet').style.display = 'block';
+            setTimeout(function() {
+                document.getElementById('alertBet').style.display = 'none';
+            }, 2000);            
         },
         deleteChoice(choice){
             let index = this.list.indexOf(choice);
@@ -106,6 +114,7 @@ const countList = new Vue({
 function setCredits(credits){
     document.getElementById('credits').innerHTML = Math.round(credits * 100) / 100
 }
+
 
 function toggleDarkLight() {
     var $bet_card = $(".darkmo");
