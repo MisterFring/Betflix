@@ -58,7 +58,7 @@ const cart = new Vue({
             let mul = odd * am;
             return mul.toFixed(2);
         }
-    	}
+    }
 });
 
 const betList = new Vue({
@@ -104,7 +104,7 @@ const countList = new Vue({
 });
 
 function setCredits(credits){
-    document.getElementById('credits').innerHTML = credits
+    document.getElementById('credits').innerHTML = Math.round(credits * 100) / 100
 }
 
 function toggleDarkLight() {
@@ -114,5 +114,4 @@ function toggleDarkLight() {
     $bet_card.toggleClass("dark-mode light-mode")
     $cart.toggleClass("dark-mode light-mode")
     $cart_background.toggleClass("dark-mode light-mode")
-    
-  }
+}
